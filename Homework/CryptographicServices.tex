@@ -1,0 +1,341 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{siunitx}
+% ---------------------------------------------------
+%                       FONT 
+% ---------------------------------------------------
+\usepackage{cmbright}                               % Font
+\documentclass{article}
+\usepackage{siunitx}
+\usepackage[hidelinks]{hyperref} % LINKS
+\usepackage{caption}
+\decimalpoint
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[margin=0.9in]{geometry}
+\usepackage{fancyhdr}
+\usepackage[inline]{enumitem}
+\usepackage{float}
+\usepackage{cancel}
+\usepackage{bigints}
+\usepackage[usenames]{color}
+\usepackage{xcolor}
+\usepackage{listingsutf8}
+\usepackage{algorithm}
+\usepackage{tocloft}
+\usepackage[none]{hyphenat}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{tabularx}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+\usepackage{times}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\pagestyle{fancy}
+\setlength{\headheight}{15pt} 
+\lhead{Cryptographic services}
+\rhead{\thepage}
+\lfoot{ESCOM-IPN}
+\renewcommand{\footrulewidth}{0.5pt}
+\setlength{\parskip}{0.5em}
+\newcommand{\ve}[1]{\overrightarrow{#1}}
+\newcommand{\abs}[1]{\left\lvert #1 \right\lvert}
+\date{February 22, 2019}
+\title{Cryptographic services}
+\author{Abigail Nicolas Sayago}
+\usepackage[
+  separate-uncertainty = true,
+  multi-part-units = repeat
+]{siunitx}
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pred}{rgb}{0.9,0,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+\lstset{tabsize=1}
+\usepackage{wrapfig}
+\usepackage{multicol}
+\usepackage{listings}
+\lstset{ frame=Ltb,
+framerule=0pt,
+aboveskip=0.5cm,
+framextopmargin=3pt,
+framexbottommargin=3pt,
+framexleftmargin=0.4cm,
+framesep=0pt,
+rulesep=.4pt,
+backgroundcolor=\color{gray97},
+rulesepcolor=\color{black},
+%
+stringstyle=\ttfamily,
+showstringspaces = false,
+basicstyle=\small\ttfamily,
+commentstyle=\color{gray45},
+keywordstyle=\bfseries,
+%
+numbers=left,
+numbersep=15pt,
+numberstyle=\tiny,
+numberfirstline = false,
+breaklines=true,
+}
+
+% minimizar fragmentado de listados
+\lstnewenvironment{listing}[1][]
+{\lstset{#1}\pagebreak[0]}{\pagebreak[0]}
+
+\lstdefinestyle{consola}
+{basicstyle=\scriptsize\bf\ttfamily,
+backgroundcolor=\color{gray75},
+}
+
+\lstdefinestyle{Java}
+{language=Java,
+}
+%%%%%%%%%%%%%%%%%%%%%
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+\lstset{escapechar=@,style=customc}
+
+% Ayuda para el formato de las tablas
+\usepackage{array}
+% Se declara un nuevo tipo de columna para alinear de manera:
+% -Horizontal
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+% -Vertical
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+
+% Indica la separacion entre las columnas de una tabla
+\setlength{\tabcolsep}{10pt} % Default value: 6pt
+% Indica el padding inferior y superior de las celdas de una tabla
+\renewcommand{\arraystretch}{1.8} % Default value: 1
+% minimizar fragmentado de listados
+\lstnewenvironment{listing}[1][]
+{\lstset{#1}\pagebreak[0]}{\pagebreak[0]}
+
+\lstdefinestyle{consola}
+{basicstyle=\scriptsize\bf\ttfamily,
+backgroundcolor=\color{gray75},
+}
+
+\lstdefinestyle{C}
+{language=C,
+}
+ \lstset{style=CompilandoStyle}                                  %Use this style
+
+    \usepackage{minted} % Paquete que permite citar codigo
+    \usemintedstyle{borland} % Aqui se define el colorscheme para minted
+    \setminted{
+        fontsize = \scriptsize, % Ajusta el codigo a la hoja
+        baselinestretch = 1,
+        linenos, % set numbers
+        breaklines=true, % Hace un salto de linea automatico en caso de que se llege al final de la line
+        tabsize=3 
+    }
+%%%%%%%%%%%%%%%%%%%%%
+
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\itshape\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+\lstdefinestyle{customasm}{
+  belowcaptionskip=1\baselineskip,
+  frame=L,
+  xleftmargin=\parindent,
+  language=[x86masm]Assembler,
+  basicstyle=\footnotesize\ttfamily,
+  commentstyle=\itshape\color{purple!40!black},
+}
+
+\lstset{escapechar=@,style=customc}
+
+    % =====  CODE EDITOR =========
+    \lstdefinestyle{CompilandoStyle} {                              %This is Code Style
+        backgroundcolor=\color{BlueGrey800MD},                      %Background Color  
+        basicstyle=\tiny\color{white},                              %Font color
+        commentstyle=\color{BlueGrey100MD},                         %Comment color
+        stringstyle=\color{TealMD},                                 %String color
+        keywordstyle=\color{Green100MD},                            %keywords color
+        numberstyle=\tiny\color{TealMD},                            %Size of a number
+        frame=shadowbox,                                            %Adds a frame around the code
+        breakatwhitespace=true,                                     %Style                       
+        breaklines=true,                                            %Style                   
+        keepspaces=true,                                            %Style                   
+        numbers=left,                                               %Style                   
+        numbersep=10pt,                                             %Style 
+        xleftmargin=\parindent,                                     %Style 
+        tabsize=4                                                   %Style 
+    }
+ 
+    \lstset{style=CompilandoStyle}                                  %Use this style
+
+    \usepackage{minted} % Paquete que permite citar codigo
+    \usemintedstyle{borland} % Aqui se define el colorscheme para minted
+    \setminted{
+        fontsize = \scriptsize, % Ajusta el codigo a la hoja
+        baselinestretch = 1,
+        linenos, % set numbers
+        breaklines=true, % Hace un salto de linea automatico en caso de que se llege al final de la line
+        tabsize=3 
+    }
+    
+\usepackage{longtable}
+%Permite crear columnas en el documento
+\usepackage{multicol}
+\usepackage{color}
+\usepackage{comment}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
+\newcommand{\subtabitem}{~~~~\llap{\textbullet}~~}
+
+\bibliographystyle{IEEEtran}
+\begin{document}
+        \begin{titlepage}
+            \begin{center}
+                
+                % Upper part of the page. The '~' is needed because \\
+                % only works if a paragraph has started.
+                
+                \noindent
+                \begin{minipage}{0.5\textwidth}
+                    \begin{flushleft} \large
+                        \includegraphics[width=0.3\textwidth]{../ipn.png}
+                    \end{flushleft}
+                \end{minipage}%
+                \begin{minipage}{0.55\textwidth}
+                    \begin{flushright} \large
+                        \includegraphics[width=0.7\textwidth]{../escom.png}
+                    \end{flushright}
+                \end{minipage}
+                
+                \textsc{\LARGE Instituto Politécnico Nacional}\\[0.5cm]
+                
+                \textsc{\Large Escuela Superior de Cómputo}\\[1cm]
+                
+                % Title
+                
+                { \huge Cryptographic services \\[1cm] }
+                
+                { \Large Cryptography} \\[1cm]
+                
+                { \Large 3CM6 } \\[1cm]
+                
+                \noindent
+                \begin{minipage}{0.5\textwidth}
+                    \begin{flushleft} \large
+                        \emph{Student name:}\\
+                        \begin{tabular}{ll}
+                        Nicolás Sayago Abigail\\
+                    \end{tabular}
+                    \end{flushleft}
+                \end{minipage}%
+                \begin{minipage}{0.5\textwidth}
+                    \begin{flushright} \large
+                        \emph{Intructor:} \\
+                        Díaz Santiago Sandra  \\
+                    \end{flushright}
+                \end{minipage}
+                
+                \vfill
+                
+                % Bottom of the page
+                {\large February 23, 2019}
+            \end{center}
+        \end{titlepage}
+    
+    \tableofcontents
+    \newpage
+    
+    \section{Privacy or confidentiality}
+    	\subsection{Definition}
+    		Preserving authorized restrictions on information access and disclosure, including means for protecting personal privacy and proprietary information. A loss of confidentiality is the unauthorized disclosure of information.
+
+    		We can see that this term covers two related concepts:
+
+    		\textb{Data confidentiality}	\\
+    		Assures that private or confidential information is not made available or disclosed to unauthorized individuals.
+
+    		\textb{Privacy}	\\
+    		Assures that individuals control or influence what information related to them may be collected and stored and by whom and to whom that information may be disclosed.
+
+    	\subsection{Example}
+    		Student grade information is an asset whose confidentiality is considered to be highly important by students. In the United States, the release of such information is regulated by the Family Educational Rights and Privacy Act (FERPA). Grade information should only be available to students, their parents, and employees that require the information to do their job. Student enrollment information may have a moderate confidentiality rating. While still covered by FERPA, this information is seen by more people on a daily basis, is less likely to be targeted than grade information, and results in less damage if disclosed. Directory information, such as lists of students or faculty or departmental lists, may be assigned a low confidentialiy rating or indeed no rating. This information is typically freely available to the public and published on a school's Web site
+
+    \section{Integrity}
+    	\subsection{Definition}
+    		Guarding against improper information modification or destruction, including ensuring information nonrepudiation and authenticity. A loss of integrity is the unauthorized modification or destruction of information.
+
+    		We can see that this term covers two related concepts:
+
+    		\textb{Data integrity}	\\
+    		Assures that information and programs are changed only in a specified and authorized manner.
+
+    		\textb{System integrity}	\\
+    		Assures that a system performs its intended function in an unimpaired manner, free from deliberate or inadvertent unauthorized manipulation of the system.
+
+    	\subsection{Example}
+    		Several aspects of integrity are ilustrated by the example of a hospital patient's allergy information stored in a database. The doctor should be able to trust that information is correct and current. Now suppose that an employee (e.g., a nurse) who is authorized to view and update this information deliberately falsifies the data to cause harm to the hospital. The database needs to be restored to a trusted basis quickly, and it should be possible to trace the error back to the person responsible. Patient allergy information is an example of an asset with a high requirement for integrity. Inaccurate information could result in serious harm or death to a patient and expose the hospital to massive liability.
+
+    		An example of an asset that may be assigned a moderate level of integrity requirement is a Web site that offers a forum to registered users to discuss some specific topic. Either a registered user or a hacker could falsify some entries or deface the Web site. If the forum exists only for the enjoyment of the users, brings in little or no advertising revenue, and is not used for something important such as research, then potential damage is not severe. The Web master may experience some data, financial, and time loss.
+
+    		An example of a low integrity requirement is an anonymous online poll. Many Web sites, such as news organizations, offer these polls to their users with very few safeguards. However, the inaccuracy and unscientific nature of such polls is well understood.
+
+    \section{Authentication}
+    	\subsection{Definition}
+    		The property of being genuine and being able to be verified and trusted; confidence in the validity of a transmission, a message, or message originator. This means verifying that users are who they say they are and that each input arriving at the system came from a trusted source.
+
+    		The authentication service is concerned with assuring that a communication is authentic. 
+
+    	\subsection{Example}
+    		In the case of a single message, such as warning or alarm signal, the function of the authentication service is to assure the recipient that the message is from the source that it claims to be from. In the case of an ongoing interaction, such as the connection of a terminal to a host, two aspects are involved. First, at the time of connection initiation, the service assures that the two entities are authentic, that is, that each is the entity that it claims to be. Second, the service must assure that the connection is not interfered with in such a way that a third party can masquerade as one of the two legitimate parties for the purposes of unauthorized transmission or reception.
+
+    \section{Non-repudiation}
+    	\subsection{Definition}
+    		Provides protection against denial by one of the entities involved in a communication.
+
+    		Prevents either sender or receiver from denying a trasmitted message. Thus, when a message is sent, the receiver can prove that the alleged sender in fact sent the messager. Similarly, when a message is received, the sender can prove that the alleged receiver in fact received the message.
+
+    		\textb{Nonrepudiation, Origin}	\\
+    		Proof that the message was sent by the specified party.
+
+    		\textb{Nonrepudiation, Destination}	\\
+    		Proof that the message was received by the specified party.
+        	
+\end{document}
