@@ -1,5 +1,5 @@
 /*
-	Description: In this program we can cipher and descipher
+	Description: We can cipher and decipher
 
 */
 
