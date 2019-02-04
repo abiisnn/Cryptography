@@ -1,5 +1,7 @@
 /*
-	Description: We can cipher and decipher
+	Author: Abigail Nicolas Sayago
+	Description: We can cipher and decipher with the 
+				 SHIFT CIPHER
 
 */
 
@@ -8,8 +10,8 @@
 using namespace std;
 
 int getNumber(char letter);
-void cipher(int n);
-void decipher(int n);
+void shiftCipher(int n);
+void shiftDecipher(int n);
 //void decipher(int n, int k, string cipher);
 
 int main(int argc, char const *argv[]) {
@@ -19,9 +21,9 @@ int main(int argc, char const *argv[]) {
 	    cout << endl << "\n1 - Cipher" << endl << "2 - Decipher" << endl;
 	    cin >> opc; 
 	    if(opc == 1) 
-		    cipher(n);
+		    shiftCipher(n);
         if(opc == 2)
-		    decipher(n);
+		    shiftDecipher(n);
 	}
 	/*
 	string dec;
@@ -33,7 +35,7 @@ int main(int argc, char const *argv[]) {
 	return 0;
 }
 
-void cipher(int n) {
+void shiftCipher(int n) {
 	int i, k, numLetter, numCip[26];
 	string message;
 	char character = 'A';
@@ -58,7 +60,7 @@ void cipher(int n) {
 }
 
 //void decipher(int n, int k, string cipher) {
-void decipher(int n) {
+void shiftDecipher(int n) {
 	int i, k, numLetter, numDec[26];
 	string cipher;
 	char character = 'A';
