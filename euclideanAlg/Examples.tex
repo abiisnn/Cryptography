@@ -1,0 +1,130 @@
+% Definición tipo de documento
+\documentclass[12pt,openany]{book}
+
+% Paquetes
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,activeacute]{babel}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[latin1]{inputenc}
+
+%Para hacer cajas bonitas
+\usepackage{fancybox}
+
+%Permite crear columnas en el documento
+\usepackage{multicol} 
+\usepackage{color}
+\usepackage{comment}
+
+%Permite incluir imagenes
+\usepackage{graphicx}
+\graphicspath{{images/}} %Indicamos la ruta de las imagenes
+
+% Configuracion de encabezado y pie de pagina
+\usepackage{fancyhdr}                                          
+    \pagestyle{fancy}                                               
+    \setlength{\headheight}{16pt}                                   
+    \setlength{\parskip}{0.5em}                                    
+    \renewcommand{\footrulewidth}{0.5pt}                            
+    \lhead{ }
+
+\title{An\'alisis Vectorial}
+\author{Nico\'as Sayago Abigail}
+
+% ////////////////////////////////////////
+% ///////// INICIO DEL DOCUMENTO /////////
+%/////////////////////////////////////////
+
+\begin{document}
+    \begin{titlepage}
+        \centering
+        \rule{\linewidth}{0.5mm} \\[1.0cm]
+            { \huge \bfseries Inverse multiplicative}\\[1.0cm] 
+        \rule{\linewidth}{0.5mm} \\[2.0cm]
+        \centering
+        Abigail Nicol\'as Sayago 
+    \end{titlepage}
+   
+
+\tableofcontents
+
+\newpage
+
+	With $8^{-1}$ mod $13$
+	
+	\begin{itemize}
+		\item Obtain each operation by Euclidean Algorithm
+			\begin{itemize}
+				\item[\Checkmark] $8 = 13 * 0 + 8$
+				\item[\Checkmark] $13 = 8 * 1 + 5$
+				\item[\Checkmark] $8 = 5 * 1 + 3$
+				\item[\Checkmark] $5 = 3 * 1 + 2$
+				\item[\Checkmark] $3 = 2 * 1 + 1$
+				\item[\Checkmark] $2 = 1 * 2 + 0$	
+			\end{itemize}
+
+		\item Second
+			\begin{itemize}
+				\item[\Checkmark] $13 = 8 * 1 + 5$ $\longrightarrow$ $5 = 13 + 8(-1)$
+				
+				\item[\Checkmark] $8 = 5 * 1 + 3$ $\longrightarrow$ $3 = 8 + 5(-1)$
+				
+				\item[\Checkmark] $5 = 3 * 1 + 2$ $\longrightarrow$ $2 = 5 + 3(-1)$
+				
+				\item[\Checkmark] $3 = 2 * 1 + 1$ $\longrightarrow$ $1 = 3 + 2(-1)$
+			\end{itemize}
+
+		\item Th
+			\begin{itemize}
+				
+				\item[\Checkmark] $3 = 8 + 5(-1)$
+					\begin{equation*}
+						\begin{split}
+							3 &= 8 + 5(-1)	\\
+							  &= 8 + \left[ 5 = 13 + 8(-1) \right](-1)	\\
+							  &= 8 + 13(-1) + 8(1) \\
+							  &= 8(2) + 13(-1)	\\
+						\end{split}
+					\end{equation*}
+
+				\item[\Checkmark] $5 = 13 + 8(-1)$
+				
+				
+				\item[\Checkmark] $2 = 5 + 3(-1)$
+				
+				\item[\Checkmark] $1 = 3 + 2(-1)$
+			\end{itemize}
+
+
+			
+	\end{itemize}
+			Sustituimos en la ecuaci\'on diferencial:
+				\begin{equation*}
+					\begin{split}
+						\vec{C}m^{2}e^{mt}+2\alpha\vec{C}me^{mt}+w^{2}\vec{C}e^{mt}=\vec{0}
+					\end{split}
+				\end{equation*}
+				Factorizamos:
+				\begin{equation*}
+					\begin{split}
+						m_{1,2}&=\frac{-b\pm\sqrt{b^{2}--4ac}}{2a} 		 		\\
+							   &=\frac{-2\alpha\pm\sqrt{4\alpha^{2}-4w^{2}}}{2}	\\
+							   &=-\alpha\pm\sqrt{\alpha^{2}-w^{2}} 
+					\end{split}
+				\end{equation*}
+
+		% ///////////////////////////
+		% /////// Problemas ////////
+		% /////////////////////////
+		\subsection{Problemas}
+			\subsubsection{Ejercicio 1}
+				\noindent\textsl{Soluci\'on:}	\\
+				\begin{equation*}
+					\begin{split}
+						\frac{\partial d}{\partial x}x^{2}\ln(3ye^{z})=\ln(3ye^{z})2x
+					\end{split}
+				\end{equation*}
+
+\end{document}

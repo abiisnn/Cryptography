@@ -1,6 +1,6 @@
 /*
-	Description: We can cipher and decipher
-
+	Description: We can cipher and decipher with the 
+				 AFIN CIPHER
 */
 
 #include <iostream>
@@ -8,23 +8,20 @@
 using namespace std;
 
 int getNumber(char letter);
-void cipher(int n);
-void decipher(int n);
-//void decipher(int n, int k, string cipher);
+void afinCipher(int n);
+void afinDecipher(int n);
 
 int main(int argc, char const *argv[]) {
     int n = 26, opc = 5;
     //int i;
-   /* while(opc != 0) {
+    while(opc != 0) {
 	    cout << endl << "\n1 - Cipher" << endl << "2 - Decipher" << endl;
 	    cin >> opc; 
 	    if(opc == 1) 
-		    cipher(n);
+		    afinCipher(n);
         if(opc == 2)
-		    decipher(n);
+		    afinDecipher(n);
 	}
-	*/
-	cipher(27);
 	/*
 	string dec;
 	cin >> dec;
@@ -35,8 +32,8 @@ int main(int argc, char const *argv[]) {
 	return 0;
 }
 
-void cipher(int n) {
-	int i, a, b, k, numLetter, numCip[27];
+void afinCipher(int n) {
+	int i, a, b, numLetter, numCip[26];
 	string message;
 	char character = 'A';
 
@@ -44,41 +41,30 @@ void cipher(int n) {
 	cout << "Write the message | Write a | Write b \n";
 	cin >> message >> a >> b;
 
-	for(i = 0; i < 27; i++) {
+	for(i = 0; i < 26; i++) {
 		numCip[i] = -1;
 	}
 	// For each character
 	for(i = 0; i < message.length(); i++) {
 		numLetter = getNumber(message[i]);
-		if(numLetter == -156) {
-			numLetter = 14;
-		}
-		else if(numLetter > 13) {
-			numLetter++;
-		}
-		//cout << numLetter << endl;
 		if(numCip[numLetter] == -1) {
-			numCip[numLetter] = (((2 * numLetter) + b) % n);	
- 
+			numCip[numLetter] = ((a * numLetter) + b) % n; 
 		}
-		if(numCip[numLetter] == 14) {
-			character = character + 100;
-		}
-	//	character = character + numCip[numLetter];
+		character = character + numCip[numLetter];
 		cout << character;
-	//	character = 'A'; 
+		character = 'A';
 	}
 }
 
 //void decipher(int n, int k, string cipher) {
-void decipher(int n) {
-	int i, k, numLetter, numDec[26];
+void afinDecipher(int n) {
+	int i, a, b, numLetter, numDec[26];
 	string cipher;
 	char character = 'A';
 
 	cout << "\n -------------------------------\n";
-	cout << "Write the cipher | Write the key \n";
-	cin >> cipher >> k;
+	cout << "Write the message | Write a | Write b \n";
+	cin >> cipher >> a >> b;
 
 	for(i = 0; i < 26; i++) {
 		numDec[i] = -1;
@@ -87,11 +73,12 @@ void decipher(int n) {
 	for(i = 0; i <  cipher.length(); i++) {
 		numLetter = getNumber(cipher[i]);
 		if(numDec[numLetter] == -1) {
-			if((numLetter - k) < 0) {
-				numDec[numLetter] = (numLetter - k + n) % n;
+			numDec[numLetter] = numLetter - b;
+			if(numDec[numLetter] < 0) {
+				numDec[numLetter] = (n + (numDec[numLetter] / a)) % n;
 			}
 			else
-				numDec[numLetter] = (numLetter - k) % n; 
+				numDec[numLetter] = (numDec[numLetter] / a) % n; 
 		}
 		character = character + numDec[numLetter];
 		cout << character;
