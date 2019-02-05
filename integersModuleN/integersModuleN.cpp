@@ -45,8 +45,12 @@ void fillMatrix(int **m, int t) {
 void printMatrix(int **m, int t) {
 	int i, j;
 	for(i = 0; i < t; i++) {
-		for(j = 0; j < t; j++) 
-			cout << "[" << matrix[i][j] << "]";
+		for(j = 0; j < t; j++) {
+			if( matrix[i][j] < 10) {
+				cout << "0";
+			}
+			cout << matrix[i][j] << " ";	
+		}
 		cout << endl;
 	}
 }
