@@ -5,6 +5,7 @@ void fillMatrix(int **m, int t);
 void printMatrix(int **m, int t);
 void fillTriangle(int **m, int cof[], int t, int n);
 void fillTable(int **m, int cof[], int t, int n);
+int getInv(int **m, int num, int t);
 
 int **matrix;
 int main(int argc, char const *argv[]) {
@@ -32,6 +33,17 @@ int main(int argc, char const *argv[]) {
 	cout << endl;
 	
 	printMatrix(matrix, ti);
+
+	cout << endl;
+
+	int inv = getInv(matrix, 26, ti);
+	cout << "Inverso de 26: " << inv << endl;
+
+	int inv2 = getInv(matrix, 17, ti);
+	cout << "Inverso de 17: " << inv2 << endl;
+
+	int inv3 = getInv(matrix, 11, ti);
+	cout << "Inverso de 11: " << inv3 << endl;
 
 	return 0;
 }
@@ -83,5 +95,18 @@ void fillTable(int **m, int cof[], int t, int n) {
 			m[i][j] = (cof[j] * cof[aux]) % n;
 		}
 		aux++;
+	}
+}
+
+int getInv(int **m, int num, int t) {
+	int i, j, aux; 
+	for(i = 0; i < t; i++) {
+		if(matrix[0][i] == num) {
+			for(j = 0; j < t; j++) {
+				aux = matrix[j][i];
+				if(aux == 1) 
+					return matrix[j][0];
+			}
+		}
 	}
 }
