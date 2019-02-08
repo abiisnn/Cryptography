@@ -21,7 +21,7 @@ int main(int argc, char const *argv[]) {
     int n = 94, opc = 5;
     int i;
     char a = ' ';
-    for(i = 33; i < 127; i++) {
+    for(i = 32; i < 127; i++) {
     	a = i;
     	cout << i << " = " << a << endl;
     }
@@ -48,12 +48,13 @@ int main(int argc, char const *argv[]) {
 void shiftCipher(int n) {
 	int i, k, numLetter, numCip[n];
 	string message;
-	char character = '!';
+	char character = ' ';
 
 	cout << "\n -------------------------------\n";
-	cout << "Write the message | Write the key \n";
-	cin >> message >> k;
-
+	cout << "Write the message \n";
+	getline(message, 10);
+	cout << endl << "Write the key \n";
+	cout << k;
 	for(i = 0; i < n; i++) {
 		numCip[i] = -1;
 	}
@@ -65,7 +66,7 @@ void shiftCipher(int n) {
 		}
 		character = character + numCip[numLetter];
 		cout << character;
-		character = '!';
+		character = ' ';
 	}
 }
 
@@ -73,7 +74,7 @@ void shiftCipher(int n) {
 void shiftDecipher(int n) {
 	int i, k, numLetter, numDec[n];
 	string cipher;
-	char character = '!';
+	char character = ' ';
 
 	cout << "\n -------------------------------\n";
 	cout << "Write the cipher | Write the key \n";
@@ -94,11 +95,11 @@ void shiftDecipher(int n) {
 		}
 		character = character + numDec[numLetter];
 		cout << character;
-		character = '!';
+		character = ' ';
 	}
 }
 
 int getNumber(char letter) {
-	int i = letter - 33;
+	int i = letter - 32;
 	return i;
 }
