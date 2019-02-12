@@ -21,21 +21,15 @@ int main(){
 		cin>>op;
 		//Cifrado del mensaje
 		if(op == 1){
-			cout<<"Ingrese la palabra clave: ";
-			getchar();
 			getline(cin, key);
-			cout<<"Ingrese el mensaje a cifrar: ";
 			getline(cin, msj);
-			cout<<"Mensaje cifrado: " + cipher(key, msj) + "\n";
+			cout<<cipher(key, msj) + "\n";
 		}
 		//Descifrado del mensaje
 		else if(op == 2){
-			cout<<"Ingrese la palabra clave: ";
-			getchar();
 			getline(cin, key);
-			cout<<"Ingrese el mensaje a descifrar: ";
 			getline(cin, msj);
-			cout<<"Mensaje descifrado: " + descipher(key, msj) + "\n";
+			cout<<descipher(key, msj) + "\n";
 		}
 	}while(op != 3);
 	return 0;
