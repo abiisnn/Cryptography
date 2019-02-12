@@ -23,6 +23,7 @@ int main(int argc, char const *argv[]) {
     int n = 95;
     char d = ' ';
     int a, b, i;
+    //cin >> a >> b;
     string cadena = " ";
 	//string cadena = "<< ttt >>";
 	getline(cin, cadena);
@@ -30,7 +31,7 @@ int main(int argc, char const *argv[]) {
 	a = 9; b = 9;
 	// Verify if a is correct
 	if((gcdRecursive(a, n) == 1) && (gcdRecursive(b, n) == 1))
-		affineCipher(n, cadena, a, b);
+		affineDecipher(n, cadena, a, b);
 	else
 		cout << "Incorrect, try again";	 
 
@@ -43,7 +44,7 @@ int main(int argc, char const *argv[]) {
 }
 
 void affineCipher(int n, string message, int a, int b) {
-	cout << endl << "La cadena es: " << message << endl;
+	//cout << endl << "La cadena es: " << message << endl;
 	int i, numLetter, numCip[n];
 	char character = ' ';
 	for(i = 0; i < n; i++) 
