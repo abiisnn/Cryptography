@@ -15,7 +15,10 @@
 	g++ -c libraryCipher.cpp
 	g++ libraryCipher.cpp -c
 	g++ libraryCipher.cpp affineCipher.cpp -o affine
-	./affine <PRUEBA.in >out.afn
+	./affine > cip.out
+	9
+	9
+	affine.in
 */
 
 #include <iostream>
