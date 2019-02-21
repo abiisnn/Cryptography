@@ -7,11 +7,10 @@
 using namespace std;
 
 //NOTA: Caracteres imprimibles de 32-126
-// c++ keyWordCipher.cpp -o Key
-/* ./Key > cip.out
+// c++ keyWordCipher.cpp -o kwc
+/* ./kwc > cip.out
 	keyWordCipher.in*/
 
-void menu();
 string cipher(string key, string msj);
 
 int main(){
@@ -36,28 +35,24 @@ int main(){
 	return 0;
 }
 
-void menu(){
-	cout<<"Escoja la opcion que desee realizar: ";
-	cout<<"\n1.- Cifrar";
-	cout<<"\n2.- Descifrar";
-	cout<<"\n3.- Salir         ";
-}
-
 string cipher(string key, string msj){
 	//Obtención del mensaje caracter a caracter
-	int cont3, nuevo_val = 0, aux = 0, n = 95, tam_key = 0, val_c = 0;
+	int cont3, cont2, nuevo_val = 0, aux = 0, n = 95, tam_key = 0, val_c = 0;
 	string msj_cip;
 	char aux_msj;
 	//Tamaño de la palabra clave
 	tam_key = key.size();
-	for(cont3 = 0; cont3 < msj.size(); cont3++){
-		val_c = (int)msj[cont3] - 32;
-		aux = (int)key[cont3 % tam_key] - 32;
-		//Se obtiene el nuevo valor para la letra
-		nuevo_val = (val_c + aux) % n;
-		nuevo_val += 32;
-		aux_msj = (char)nuevo_val;
-		msj_cip += aux_msj;
+	for(cont3 = 0, cont2 = 0; cont3 < msj.size(); cont3++){
+		if(msj[cont3] >= 32 && msj[cont3] <= 126){
+			val_c = (int)msj[cont3] - 32;
+			aux = (int)key[cont2 % tam_key] - 32;
+			//Se obtiene el nuevo valor para la letra
+			nuevo_val = (val_c + aux) % n;
+			nuevo_val += 32;
+			aux_msj = (char)nuevo_val;
+			msj_cip += aux_msj;
+			cont2++;
+		}
 	}
 	return msj_cip;
 }
