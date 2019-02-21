@@ -7,11 +7,10 @@
 using namespace std;
 
 //NOTA: Caracteres imprimibles de 32-126
-// g++ keyWordCipher.cpp -o Key
-/* ./Key > des.out
+// g++ keyWordCipher.cpp -o kwc
+/* ./kwc > des.out
 	cip.in*/
 
-void menu();
 string descipher(string key, string msj);
 
 int main(){
@@ -33,13 +32,6 @@ int main(){
 	}
 	cout << descipher(key, msj);
 	return 0;
-}
-
-void menu(){
-	cout<<"Escoja la opcion que desee realizar: ";
-	cout<<"\n1.- Cifrar";
-	cout<<"\n2.- Descifrar";
-	cout<<"\n3.- Salir         ";
 }
 
 string descipher(string key, string msj){
