@@ -15,7 +15,10 @@
 	g++ -c libraryCipher.cpp
 	g++ libraryCipher.cpp -c
 	g++ libraryCipher.cpp affineDecipher.cpp -o affine
-	./affine <KYC.afn >out.out
+	./affine > des.out
+	9
+	9
+	cip.in
 */
 
 #include <iostream>
