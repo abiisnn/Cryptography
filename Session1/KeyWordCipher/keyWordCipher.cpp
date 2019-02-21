@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <string>
+#include <fstream>
 #include <stdio.h>
 
 using namespace std;
@@ -10,35 +11,27 @@ using namespace std;
 // ./Key > KWC.in < KWC.out
 void menu();
 string cipher(string key, string msj);
-string descipher(string key, string msj);
 
 int main(){
-	string key;
-	string msj;
-	int op = 0;
-	getline(cin, key, '\n');
-	getline(cin, msj);
-	cout << key << endl;
-	cout << msj << endl;
+	string key, msj, cadena;
+	fstream f;
+	char *path;
+	//Obtención de la clave
+	getline(cin, key);
+	//Lectura del archivo
+	string dir;
+	getline(cin, dir);
+	path = const_cast<char*>(dir.c_str());
+	f.open(path);
+	if(f.is_open()){
+		while(!f.eof()){
+			getline(f, cadena);
+			msj += cadena; 
+		}
+		f.close();
+	}
 	cout << cipher(key, msj);
-/*	do{
-		//Despliegue del menu de opciones
-		menu();
-		cin>>op;
-		//Cifrado del mensaje
-		if(op == 1){
-			getline(cin, key);
-			getline(cin, msj);
-			cout<<cipher(key, msj) + "\n";
-		}
-		//Descifrado del mensaje
-		else if(op == 2){
-			getline(cin, key);
-			getline(cin, msj);
-			cout<<descipher(key, msj) + "\n";
-		}
-	}while(op != 3);
-*/	return 0;
+	return 0;
 }
 
 void menu(){
@@ -65,27 +58,4 @@ string cipher(string key, string msj){
 		msj_cip += aux_msj;
 	}
 	return msj_cip;
-}
-
-string descipher(string key, string msj){
-	//Obtención del mensaje caracter a caracter
-	int cont3, nuevo_val = 0, aux = 0, n = 95, tam_key = 0, val_c = 0;
-	string msj_descip;
-	char aux_msj;
-	//Tamaño de la palabra clave
-	tam_key = key.size();
-	for(cont3 = 0; cont3 < msj.size(); cont3++){
-		val_c = (int)msj[cont3] - 32;
-		aux = (int)key[cont3 % tam_key] - 32;
-		//Se obtiene el nuevo valor para la letra
-		nuevo_val = val_c - aux;
-		if(nuevo_val < 0)
-			nuevo_val = n + (nuevo_val % n);
-		else
-			nuevo_val = nuevo_val % n;
-		nuevo_val += 32;
-		aux_msj = (char)nuevo_val;
-		msj_descip += aux_msj;
-	}
-	return msj_descip;
 }
