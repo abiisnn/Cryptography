@@ -8,7 +8,9 @@ using namespace std;
 
 //NOTA: Caracteres imprimibles de 32-126
 // c++ keyWordCipher.cpp -o Key
-// ./Key > KWC.in < KWC.out
+/* ./Key > cip.out
+	keyWordCipher.in*/
+
 void menu();
 string cipher(string key, string msj);
 
