@@ -15,28 +15,48 @@
 	g++ -c libraryCipher.cpp
 	g++ libraryCipher.cpp -c
 	g++ libraryCipher.cpp affineCipher.cpp -o affine
-	./affine <PRUEBA.in >out.afn
+	./affine > cip.out
+	9
+	9
+	affine.in
 */
 
 #include <iostream>
 #include <cstring>
+#include <stdlib.h>
+#include <fstream>
 #include "libraryCipher.h"
 using namespace std;
 
 int main(int argc, char const *argv[]) {
     char d = ' ';
     int a, b, i, n = 95;
-    string cadena, aAux, bAux;
-    getline(cin, aAux, '\n');
-    getline(cin, bAux, '\n');
-	getline(cin, cadena);
+    char *path;
+    string cadena, aAux, bAux, msj;
+    fstream f;
+    getline(cin, aAux);
+    getline(cin, bAux);
+	//Lectura del archivo
+	string dir;
+	getline(cin, dir);
+	path = const_cast<char*>(dir.c_str());
+	f.open(path);
+	if(f.is_open()){
+		while(!f.eof()){
+			getline(f, cadena);
+			msj += cadena; 
+		}
+		f.close();
+	}
 	a = atoi(aAux.c_str());
 	b = atoi(bAux.c_str());
-	cout << a << endl;
-	cout << b << endl;
 	// Verify if a is correct
 	if(gcdRecursive(a, n) == 1)
+<<<<<<< HEAD
 		affineCipher(n, cad5ena, a, b);
+=======
+		affineCipher(n, msj, a, b);
+>>>>>>> ca89a08e0d3f786b7b79d07e93a0ba825954697c
 	else
 		cout << "Incorrect, try again";	 
     return 0;
