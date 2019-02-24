@@ -6,40 +6,22 @@
 using namespace std;
 
 //NOTA: Caracteres imprimibles de 32-126
-	
+// c++ keyWordCipher.cpp -o Key
+// ./K < KWC.out > KWC.in
 void menu();
 string cipher(string key, string msj);
 string descipher(string key, string msj);
 
 int main(){
-	string key = " ";
-	string msj = " ";
+	string key;
+	string msj;
 	int op = 0;
-	do{
-		//Despliegue del menu de opciones
-		menu();
-		cin>>op;
-		//Cifrado del mensaje
-		if(op == 1){
-			getline(cin, key);
-			getline(cin, msj);
-			cout<<cipher(key, msj) + "\n";
-		}
-		//Descifrado del mensaje
-		else if(op == 2){
-			getline(cin, key);
-			getline(cin, msj);
-			cout<<descipher(key, msj) + "\n";
-		}
-	}while(op != 3);
+	getline(cin, key, '\n');
+	getline(cin, msj);
+	cout << key << endl;
+	//cout << msj << endl;
+	cout << descipher(key, msj);
 	return 0;
-}
-
-void menu(){
-	cout<<"Escoja la opcion que desee realizar: ";
-	cout<<"\n1.- Cifrar";
-	cout<<"\n2.- Descifrar";
-	cout<<"\n3.- Salir         ";
 }
 
 string cipher(string key, string msj){

@@ -7,9 +7,9 @@
 				 characters in ASCII as the alphabet to 
 				 write plaintext.
 	Instructions:
-	- Para el archivo .h g++ -c libraryCipher.cpp
-	- Crear objeto estatica g++ libraryCipher.cpp -c
-	- Ejecucion estatica g++ libraryCipher.cpp affineCipher.cpp -o affine  
+	- File .h g++ -c libraryCipher.cpp
+	- Make a object g++ libraryCipher.cpp -c
+	-  g++ libraryCipher.cpp affineCipher.cpp -o affine  
 						./affine <PRUEBA.in >out.afn
 	Copy and paste this:
 	g++ -c libraryCipher.cpp
@@ -36,7 +36,7 @@ int main(int argc, char const *argv[]) {
 	cout << b << endl;
 	// Verify if a is correct
 	if(gcdRecursive(a, n) == 1)
-		affineCipher(n, cadena, a, b);
+		affineCipher(n, cad5ena, a, b);
 	else
 		cout << "Incorrect, try again";	 
     return 0;

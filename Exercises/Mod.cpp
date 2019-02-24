@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 int mod(int a, int b) {
@@ -12,8 +13,6 @@ int mod(int a, int b) {
 }
 int main(int argc, char const *argv[])
 {
-	int a = mod(-15, 11);
-	cout << a;
+	cout << mod(-6, 27);
 	return 0;
 }
-
