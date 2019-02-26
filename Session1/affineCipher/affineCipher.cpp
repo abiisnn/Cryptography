@@ -52,11 +52,8 @@ int main(int argc, char const *argv[]) {
 	b = atoi(bAux.c_str());
 	// Verify if a is correct
 	if(gcdRecursive(a, n) == 1)
-<<<<<<< HEAD
 		affineCipher(n, cad5ena, a, b);
-=======
 		affineCipher(n, msj, a, b);
->>>>>>> ca89a08e0d3f786b7b79d07e93a0ba825954697c
 	else
 		cout << "Incorrect, try again";	 
     return 0;
