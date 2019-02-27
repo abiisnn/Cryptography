@@ -106,6 +106,7 @@ int inverseKey(int **K, int **K_inv) {
 
 int **obtencionLlave(string msj, string cip_msj) {
 	int cont3 = 0, ban, cont, cont2, aux=0;
+	
 	//Matrix corresponding to the plaintext
 	int **X = (int**)malloc(sizeof(int*)*3);
 	//Matrix corresponding to the ciphertext
@@ -113,6 +114,7 @@ int **obtencionLlave(string msj, string cip_msj) {
 	//Matrix corresponding to the key
 	int **K = (int**)malloc(sizeof(int*)*3);
 	int **Xinv = (int**)malloc(sizeof(int*)*3);
+	
 	for(int i = 0; i < 3; i++) {
 		X[i] = (int*)malloc(sizeof(int)*3);
 		Y[i] = (int*)malloc(sizeof(int)*3);
@@ -120,10 +122,13 @@ int **obtencionLlave(string msj, string cip_msj) {
 		Xinv[i] = (int*)malloc(sizeof(int)*3);
 	}
 	
-	//
+	//Cycle that is repeated till there's found a key that has inverse working in modulo 95 
 	do{
 		// X and Y are filled with the first 3 triads of the plaintext and ciphertext respectively
 		for(cont = 0; cont < 3; cont3+=3, cont++) {
+			/*Each one of the if-else is in charge of verify that the char specified belogs to the
+			printable characters in ascii, in order to avoid the \t.
+			If the char is \t, the next possition in the text is inserted into the matrix*/
 			
 			if(msj[cont3] >= 32 && msj[cont3] <= 126) {
 				X[cont][0] = (int)msj[cont3] - 32;
@@ -134,6 +139,7 @@ int **obtencionLlave(string msj, string cip_msj) {
 				X[cont][0] = (int)msj[cont3] - 32;
 				Y[cont][0] = (int)cip_msj[cont3] - 32;
 			}
+			
 			if(msj[cont3 + 1] >= 32 && msj[cont3 + 1] <= 126){
 				X[cont][1] = (int)msj[cont3 + 1] - 32;
 				Y[cont][1] = (int)cip_msj[cont3 + 1] - 32;
@@ -143,6 +149,7 @@ int **obtencionLlave(string msj, string cip_msj) {
 				X[cont][1] = (int)msj[cont3 + 1] - 32;
 				Y[cont][1] = (int)cip_msj[cont3 + 1] - 32;
 			}
+			
 			if(msj[cont3 + 2] >= 32 && msj[cont3 + 2] <= 126){
 				X[cont][2] = (int)msj[cont3 + 2] - 32;
 				Y[cont][2] = (int)cip_msj[cont3 + 2] - 32;
@@ -163,9 +170,10 @@ int **obtencionLlave(string msj, string cip_msj) {
 		fprintf(f, "(\t");
 		for(cont3 = 0; cont3 < 3; cont3++){
 			for(cont2 = 0; cont2 < 3; cont2++){
-				//Se obtiene Aij
+				//Obtains the coeficients Aij of the matrix
 				aux = aux + (Xinv[cont][cont2] * Y[cont2][cont3]);
 				if(cont2 == 2){
+					//Calculate modulo 95 for each element in the matrix 
 					if(aux < 0)
 						aux = 95 - (aux % 95);
 					else
@@ -191,17 +199,18 @@ string decipher(int **K, string msj) {
 	int **K_inv = (int**)malloc(sizeof(int*)*3);
 	for(int i = 0; i < 3; i++)
 		K_inv[i] = (int*)malloc(sizeof(int)*3);
-	//Obtención de la K inversa
+	
+	//Obtention of the inverse k
 	inverseKey(K, K_inv);
 	
 	aux = 0;
-	/*Decifrado del mensaje
-	Ciclo que obtiene el grupo de 3 caracteres*/
+	/*Decryption of the message
+	Cycle that obtains the group of 3 characters*/
 	for(cont3 = 0; cont3 < msj.size(); cont3+=3){
 		car[0] = (int)msj[cont3] - 32;
 		car[1] = (int)msj[cont3 + 1] - 32;
 		car[2] = (int)msj[cont3 + 2] - 32;
-		//Se realiza la multiplicacion de las matrices para obtener los nuevos valores
+		//Multiplication of the matrix's to obtain the new values
 		for(cont = 0; cont < 3; cont++){
 			for(cont2 = 0; cont2 < 3; cont2++)
 				//Se obtiene Aij
