@@ -14,31 +14,33 @@ int inverseKey(int **K, int **K_inv);
 string decipher(int **K, string msj);
 int matrixDeterminant(int **K);
 
-int main(){
+int main() {
 	char *path, *path2;
 	string dir, cip_msj, msj;
 	int **K;
-	//Se obtiene la dirección del archivo con el texto plano
+	// Read text plain path
 	getline(cin, dir);
 	path = const_cast<char*>(dir.c_str());
 	leerArchivo(path, &msj);
-	//Se obtiene la dirección del archivo con el texto cifrado
+	
+	// Read ciphertext path
 	getline(cin, dir);
 	path = const_cast<char*>(dir.c_str());
 	leerArchivo(path, &cip_msj);
 
+	// Get valid key
 	K = obtencionLlave(msj, cip_msj);
-	cout<<decipher(K, cip_msj);
+	cout << decipher(K, cip_msj);
 	return 0;
 }
 
-void leerArchivo(char *path, string *msj){
+void leerArchivo(char *path, string *msj) {
 	fstream f;
 	string aux_msj, ms;
-	//Lectura del archivo
+	// Read file
 	f.open(path);
-	if(f.is_open()){
-		while(!f.eof()){
+	if(f.is_open()) {
+		while(!f.eof()) {
 			getline(f, aux_msj);
 			ms += aux_msj;
 		}
@@ -47,7 +49,7 @@ void leerArchivo(char *path, string *msj){
 	*msj = ms;
 }
 
-int inverseKey(int **K, int **K_inv){
+int inverseKey(int **K, int **K_inv) {
 	int cofac[4];
 	int cont, cont2, cont3, cont4, cont_cofac, det = 0, inv_det = 0, cofactor = 0, n = 95;
 	//Obtención del determinante y su inverso
@@ -60,11 +62,11 @@ int inverseKey(int **K, int **K_inv){
 	if(inv_det == -1)
 		return -1;
 	else{
-		//Obtención de la matriz adjunta
-		//Primeros dos ciclos para recorrer todos los elementos de la matriz
-		for(cont = 0; cont < 3; cont++){
-			for(cont2 = 0; cont2 < 3; cont2++){
-				//Últimos dos ciclos para obtener cofactor del elemento analizado
+		// Getattached matrix
+		// Two cycles to traverse all the elements of the matrix
+		for(cont = 0; cont < 3; cont++) {
+			for(cont2 = 0; cont2 < 3; cont2++) {
+				// Last two cycles to obtain cofactor of the element analyzed
 				cont_cofac = 0;
 				for(cont3 = 0; cont3 < 3; cont3++){
 					for(cont4 = 0; cont4 < 3; cont4++){
@@ -74,19 +76,21 @@ int inverseKey(int **K, int **K_inv){
 						}
 					}
 				}
-				//Obtención del cofactor
+				// Get cofactor
 				cofactor = cofac[0] * cofac [3] - cofac[1] * cofac[2];
-				//Se evalúa si i+j de la posición de la matriz es par o impar
+				// Evaluated if i+j is even or odd
 				if ((cont + cont2) % 2 != 0)
 					cofactor = cofactor * (-1);
-				//Se obtiene módulo de cofactor
+				// Get modulo of the cofactor
 				if(cofactor < 0)
 					cofactor = n + (cofactor % n);
 				else 
 					cofactor = cofactor % n;
-				//Se multiplica el elemento cofactor por la inversa de la determinante y se obtiene módulo
+				// Cofactor element is multiplied by the inverse of the determinan
+				// The module is obtained
 				cofactor = (cofactor * inv_det) % n; 
-				//Se transpone la matriz de cofactores para obtener adjunta (la cual será la inversa de la llave por la operación anterior)
+				/* The matrix of cofactors is transposed to obtain attached 
+				 (which will be the inverse of the key by the previous operation) */
 				K_inv[cont2][cont] = cofactor;
 			}
 		}
@@ -94,13 +98,13 @@ int inverseKey(int **K, int **K_inv){
 	}
 }
 
-int **obtencionLlave(string msj, string cip_msj){
+int **obtencionLlave(string msj, string cip_msj) {
 	int cont3 = 0, ban;
 	int **X = (int**)malloc(sizeof(int*)*3);
 	int **Y = (int**)malloc(sizeof(int*)*3);
 	int **K = (int**)malloc(sizeof(int*)*3);
 	int **Xinv = (int**)malloc(sizeof(int*)*3);
-	for(int i = 0; i < 3; i++){
+	for(int i = 0; i < 3; i++) {
 		X[i] = (int*)malloc(sizeof(int)*3);
 		Y[i] = (int*)malloc(sizeof(int)*3);
 		K[i] = (int*)malloc(sizeof(int)*3);
@@ -109,13 +113,13 @@ int **obtencionLlave(string msj, string cip_msj){
 	
 	int cont, cont2, aux=0;
 	do{
-		//X and Y are filled with the first 3 triads of the plaintext and ciphertext respectively
-		for(cont = 0; cont < 3; cont3+=3, cont++){
-			if(msj[cont3] >= 32 && msj[cont3] <= 126){
+		// X and Y are filled with the first 3 triads of the plaintext and ciphertext respectively
+		for(cont = 0; cont < 3; cont3+=3, cont++) {
+			if(msj[cont3] >= 32 && msj[cont3] <= 126) {
 				X[cont][0] = (int)msj[cont3] - 32;
-				Y[cont][0] = (int)cip_msj[cont3] - 32;
+				Y[cont][0] = (int)cip_msj[cont3] - 32; 
 			}
-			else{
+			else {
 				cont3++;
 				X[cont][0] = (int)msj[cont3] - 32;
 				Y[cont][0] = (int)cip_msj[cont3] - 32;
@@ -124,7 +128,7 @@ int **obtencionLlave(string msj, string cip_msj){
 				X[cont][1] = (int)msj[cont3 + 1] - 32;
 				Y[cont][1] = (int)cip_msj[cont3 + 1] - 32;
 			}
-			else{
+			else {
 				cont3++;
 				X[cont][1] = (int)msj[cont3 + 1] - 32;
 				Y[cont][1] = (int)cip_msj[cont3 + 1] - 32;
@@ -133,7 +137,7 @@ int **obtencionLlave(string msj, string cip_msj){
 				X[cont][2] = (int)msj[cont3 + 2] - 32;
 				Y[cont][2] = (int)cip_msj[cont3 + 2] - 32;
 			}
-			else{
+			else {
 				cont3++;
 				X[cont][2] = (int)msj[cont3 + 2] - 32;
 				Y[cont][2] = (int)cip_msj[cont3 + 2] - 32;
@@ -143,7 +147,7 @@ int **obtencionLlave(string msj, string cip_msj){
 		ban = inverseKey(X, Xinv);
 	}while(ban != 0);
 	
-	//Multiplication to obtain K
+	// Multiplication to obtain K
 	FILE *f=fopen("C:/Users/Dell/Documents/Crypto/Session3/key.txt", "w");
 	for(cont = 0; cont < 3; cont++){
 		fprintf(f, "(\t");
@@ -168,7 +172,7 @@ int **obtencionLlave(string msj, string cip_msj){
 	return K;
 }
 
-string decipher(int **K, string msj){
+string decipher(int **K, string msj) {
 	fstream f;
 	int car[3], new_val[3], cofac[4];
 	int cont, aux = 0, cont2, cont3, n = 95;
