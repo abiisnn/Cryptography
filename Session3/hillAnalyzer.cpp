@@ -15,9 +15,10 @@ string decipher(int **K, string msj);
 int matrixDeterminant(int **K);
 
 int main() {
-	char *path, *path2;
+	char *path;
 	string dir, cip_msj, msj;
 	int **K;
+	
 	// Read text plain path
 	getline(cin, dir);
 	path = const_cast<char*>(dir.c_str());
@@ -30,6 +31,8 @@ int main() {
 
 	// Get valid key
 	K = obtencionLlave(msj, cip_msj);
+	
+	//Print the decryption of the ciphertext to prove the key obtained is correct 
 	cout << decipher(K, cip_msj);
 	return 0;
 }
@@ -52,15 +55,18 @@ void leerArchivo(char *path, string *msj) {
 int inverseKey(int **K, int **K_inv) {
 	int cofac[4];
 	int cont, cont2, cont3, cont4, cont_cofac, det = 0, inv_det = 0, cofactor = 0, n = 95;
-	//Obtención del determinante y su inverso
+	//Obtention of the determinant modulo n
 	det = matrixDeterminant(K);
 	if(det < 0)
 		det = n + (det % n);
 	else
 		det = det % n;
+	//Ontention of the determinant inverse
 	inv_det = inverse(n, det);
+	//In case that the determinant doesn't have inverse, the function returns -1
 	if(inv_det == -1)
 		return -1;
+	//In case that it has inverse
 	else{
 		// Getattached matrix
 		// Two cycles to traverse all the elements of the matrix
@@ -99,9 +105,12 @@ int inverseKey(int **K, int **K_inv) {
 }
 
 int **obtencionLlave(string msj, string cip_msj) {
-	int cont3 = 0, ban;
+	int cont3 = 0, ban, cont, cont2, aux=0;
+	//Matrix corresponding to the plaintext
 	int **X = (int**)malloc(sizeof(int*)*3);
+	//Matrix corresponding to the ciphertext
 	int **Y = (int**)malloc(sizeof(int*)*3);
+	//Matrix corresponding to the key
 	int **K = (int**)malloc(sizeof(int*)*3);
 	int **Xinv = (int**)malloc(sizeof(int*)*3);
 	for(int i = 0; i < 3; i++) {
@@ -111,10 +120,11 @@ int **obtencionLlave(string msj, string cip_msj) {
 		Xinv[i] = (int*)malloc(sizeof(int)*3);
 	}
 	
-	int cont, cont2, aux=0;
+	//
 	do{
 		// X and Y are filled with the first 3 triads of the plaintext and ciphertext respectively
 		for(cont = 0; cont < 3; cont3+=3, cont++) {
+			
 			if(msj[cont3] >= 32 && msj[cont3] <= 126) {
 				X[cont][0] = (int)msj[cont3] - 32;
 				Y[cont][0] = (int)cip_msj[cont3] - 32; 
