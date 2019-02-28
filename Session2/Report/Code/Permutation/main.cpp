@@ -43,6 +43,5 @@ int main(int argc, char const *argv[]) {
 		permutationCipher(cip, m);
 		i += m;
  	}
-	
 	return 0;
 }

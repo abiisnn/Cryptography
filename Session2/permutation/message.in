@@ -4,88 +4,116 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */ 
 #include <cstring>
-#include <string>
 #include <fstream>
 #include<math.h>
 using namespace std;
 vector<int> key;
-string msj, keyS;
-void getInverse(string keyS);
-void permutationDecipher(string blo, int m);
+string msj;
+
+void generateKey(int n);
+int gcdRecursive(int a, int b);
+void permutationCipher(string blo, int m);
+void fillSpace(int size, int m);
 
 int main(int argc, char const *argv[]) {
-	int i, j, auxK, m, size, block, space, end, num;
-	string tam, cadena, aux;
-    char *path, *pathAux;
-    fstream f, fAux;
+	int i, j, auxK, m, size, block, space, end;
+	string tam, cadena;
+    char *path;
+    fstream f;
 	vector<int> vec;
 
-	// Key file
+	// Read m
+    getline(cin, tam);
+
+	// Read plain text
 	string dir;
 	getline(cin, dir);
 	path = const_cast<char*>(dir.c_str());
 	f.open(path);
-	if(f.is_open()) {
-		while(!f.eof()) {
+	if(f.is_open()){
+		while(!f.eof()){
 			getline(f, cadena);
-			keyS += cadena; 
+			msj += cadena; 
 		}
 		f.close();
 	}
-	string dirAux;
-	getline(cin, dirAux);
-	pathAux = const_cast<char*>(dirAux.c_str());
-	fAux.open(pathAux);
-	if(fAux.is_open()) {
-		while(!fAux.eof()) {
-			getline(fAux, aux);
-			msj += aux;
-		}
-		fAux.close();
+
+	// Convert m to integer
+	m = atoi(tam.c_str());
+
+	// Generate a valid Key
+	generateKey(m);	
+
+	// Use gcd to know if we need spaces
+	size = msj.length();	
+	if((gcdRecursive(m, size) == 1) && (m > 1)) {
+		fillSpace(size, m);
 	}
-	cout << "La clave introducida es: " << keyS << endl;
-	cout << "El mensaje introducido es: " << endl << msj << endl;
-	getInverse(keyS);
-	cout << "La clave inversa es: " << endl;
 
-
-	cout << endl;
-	for(i = 0; i < keyS.length(); i++) 
-		cout << key.at(i);
-	cout << endl;	
-
-	string cip = " ";
+	// Cipher
+ 	string cip = " ";
  	i = 0;
  	while(i < msj.length()) {
-		cip = msj.substr(i, keyS.length());
-		permutationDecipher(cip, keyS.length());
-		i += keyS.length();
+ 		// Obtain a substring with size of m
+		cip = msj.substr(i, m);
+		// Send substring to cipher
+		permutationCipher(cip, m);
+		i += m;
  	}
 	return 0;
 }
+void fillSpace(int size, int m) {
+	string aux = " ";
+	double sized, md, bd;
+	int i, block, end;
 
-void getInverse(string keyS) {
-	int i, aux;
-	string c;
-	for(i = 0; i < keyS.length(); i++) 
-		key.push_back(0);
-
-	for(i = 0; i < keyS.length(); i++) {
-		// Get the number
-		c = keyS.at(i);
-		aux = atoi(c.c_str());
-		key[aux-1] = i + 1;
+	// Calculate how many spaces we have
+	sized = (double)size;
+	md = (double)m; 
+	bd = sized / md;
+	bd = floor(bd); // Exact block
+	block = (int)bd;
+	end = m * (block + 1);
+	// Fill spaces with " "
+	for(i = size; i < end; i++) {
+		msj = msj + aux;
 	}
 }
-
-void permutationDecipher(string blo, int m) {
+void permutationCipher(string blo, int m) {
 	int i, pos;
 	string cipher;
 	for(i = 0; i < m; i++) 
 		cipher.push_back(' ');
 
 	for(i = 0; i < blo.length(); i++) 
-		cipher[key.at(i)-1] = blo[i]; 
+		cipher[i] = blo[key.at(i)-1]; 
 
 	cout << cipher;
+}
+
+int gcdRecursive(int a, int b) {
+	if(b == 0) 
+		return a;
+	else {
+		return gcdRecursive(b, a % b);
+	}
+}
+
+void generateKey(int n) {
+	int i, iSecret;
+	srand(time(NULL));
+	// Fill vector Key
+	i = 0;
+	while(i < n) {
+		// Generate secret number between 1 and m:
+	    iSecret = 1 + rand() % (n);
+	    if(find(key.begin(), key.end(), iSecret) == key.end()) {
+	   		//cout << "Soy un RANDOM diferente: " << iSecret << endl;
+			key.push_back(iSecret); i++;
+		}
+	}
+	// Print key 
+	for(i = 0; i < n; i++) 
+		cout << key.at(i) << " ";
+	cout << endl;
 }

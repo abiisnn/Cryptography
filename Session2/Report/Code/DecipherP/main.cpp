@@ -31,16 +31,16 @@ int main(int argc, char const *argv[]) {
 	}
 	// Get inverse Key
 	getInverse(keyS);	
-
-	// Descipher 
+	
+	// Decipher 
 	string cip = " ";
  	i = 0;
  	while(i < msj.length()) {
  		// Obtain a substring with size of m
-		cip = msj.substr(i, keyS.length());
+		cip = msj.substr(i, key.size());
 		// Send substring to cipher
-		permutationDecipher(cip, keyS.length());
-		i += keyS.length();
+		permutationDecipher(cip, key.size());
+		i += key.size();
  	}
 	return 0;
 }

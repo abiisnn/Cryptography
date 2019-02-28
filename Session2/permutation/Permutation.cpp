@@ -86,7 +86,7 @@ void permutationCipher(string blo, int m) {
 		cipher.push_back(' ');
 
 	for(i = 0; i < blo.length(); i++) 
-		cipher[key.at(i)-1] = blo[i]; 
+		cipher[i] = blo[key.at(i)-1]; 
 
 	cout << cipher;
 }
@@ -114,6 +114,6 @@ void generateKey(int n) {
 	}
 	// Print key 
 	for(i = 0; i < n; i++) 
-		cout << key.at(i);
+		cout << key.at(i) << " ";
 	cout << endl;
 }
