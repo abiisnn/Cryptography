@@ -14,7 +14,7 @@
 	Copy and paste this:
 	g++ -c libraryCipher.cpp
 	g++ libraryCipher.cpp -c
-	g++ libraryCipher.cpp affineDecipher.cpp -o affine
+	g++ libraryCipher.cpp affineDecipher.cpp -o affineDecipher
 	./affine > des.out
 	9
 	9
