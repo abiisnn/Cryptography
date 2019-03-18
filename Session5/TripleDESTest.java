@@ -3,12 +3,13 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.io.*;
+import java.util.Scanner;
 
 public class TripleDESTest {
-  Scanner sc = new Scanner(System.in);
-  Scanner num = new Scanner(System.in);
+  static Scanner sc = new Scanner(System.in);
+  static Scanner num = new Scanner(System.in);
 
-  BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+  static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
   
   // ---------------------------------------------------
   //                  CREATE BYTE[]            
@@ -63,11 +64,13 @@ public class TripleDESTest {
   // ---------------------------------------------------
   //                MENU PARA EDE      
   // ---------------------------------------------------
-  public void menuEDE(int k) {
+  public static void menuEDE(int k) {
     if(k == 2) {
 
     }
-    if(k == 3)
+    if(k == 3){
+        
+    }
   }
 
 
@@ -78,7 +81,7 @@ public class TripleDESTest {
   //                    MAIN          
   // ---------------------------------------------------
   public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, BadPaddingException,
-      IllegalBlockSizeException, InvalidKeyException {
+      IllegalBlockSizeException, InvalidKeyException, IOException {
 
     // GET TIME
     long TInicio, TFin, tiempo; 
@@ -112,7 +115,7 @@ public class TripleDESTest {
 
     byte[] encryptedMessage = desCipher.doFinal(message);
     //System.out.println(Base64.getEncoder().encodeToString(encryptedMessage));
-    string cad = in.readLine();
+    String cad = in.readLine();
 
     desCipher.init(Cipher.DECRYPT_MODE, desKey);
     byte[] decryptedMessage = desCipher.doFinal(encryptedMessage);
@@ -134,19 +137,21 @@ public class TripleDESTest {
       System.out.print("1. EDE\n");
       System.out.print("2. EEE\n");
       System.out.print("3. Exit\n");
-      opc = sc.nexInt();
-
+      opc = sc.nextInt();
+      
+      int k = 0;
       if(opc == 1) {
         System.out.print("Write 2 keys or 3 keys\n");    
-        k = num.nexInt();
+        k = num.nextInt();
         if(k == 2 || k == 3)
           menuEDE(k);
       }
-      if(opc == 2)
+      if(opc == 2){
         System.out.print("Write 2 keys or 3 keys\n");    
-        k = num.nexInt();
+        k = num.nextInt();
         if(k == 2 || k == 3)
-          menuEEE(k);
+          menuEDE(k);
+      }
     }
 
     // Para leer cadenas
