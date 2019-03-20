@@ -10,9 +10,10 @@ import java.security.*;
 
 public class TripleDESTest {
   static Scanner sc = new Scanner(System.in);
-  static Scanner num = new Scanner(System.in);
+  static Scanner m = new Scanner(System.in);
 
   static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+  // We use in decipher
   static byte[] originalKey_1;
   static byte[] originalKey_2;
   static byte[] originalKey_3;
@@ -20,41 +21,87 @@ public class TripleDESTest {
   static byte[] iv_2;
   static byte[] iv_3;
 
-  public static void modeEEE() throws Exception {
-    // Get bytes of message
+  public static void modeEEE2Keys(String nameFile, String mode, String nameFileKey, String nameFileIV) throws Exception {
     int i;
     byte[][] IV = new byte[3][];
-
-    String name = "Servidor.java";
-    byte[] message = createByte(name);
+    byte[] keysBytes, cipherText, decrypt;
     SecretKey[] desKey;
+    String c, keyString, nameIV;
 
+    // Get bytes of message
+    byte[] message = createByte(nameFile);
+    
     // Generate keys
     KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
     keygenerator.init(56); // Size of key
-    // Get keys
-    //SecretKey[] desKey;
+
+    // Get keys, we use the same key for i = 2, 3
     desKey = new SecretKey[3];
     for(i = 0; i < 3; i++) {
-      desKey[i] = keygenerator.generateKey();
+      if(i == 2)
+        desKey[i] = desKey[1];
+      else
+        desKey[i] = keygenerator.generateKey();
     }
-    String keyString = "";
-    for(i = 0; i < 3; i++) {
+    keyString = "";
+    for(i = 0; i < 3; i++) 
       keyString = keyString + Base64.getEncoder().encodeToString(desKey[i].getEncoded());       
-    }
-    byte[] keysBytes = keyString.getBytes();
 
-    String nameFileKey = "key.txt";
+    keysBytes = keyString.getBytes();
+
     createFile(keysBytes, nameFileKey);
-
-   // Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
   
-    byte[] cipherText = message;
-
-    String c = "DES/CBC/PKCS5Padding";
+    cipherText = message;
+    c = "DES/" + mode + "/PKCS5Padding";
     for(i = 0; i < 3; i++) {
       if(i > 0) 
-        c = "DES/CBC/NoPadding";
+        c = "DES/" + mode + "/NoPadding";
+      Cipher cipher = Cipher.getInstance(c);
+      
+      // Generate an initialization vector (IV)
+      SecureRandom secureRandom = new SecureRandom();
+      byte[] ivspec = new byte[cipher.getBlockSize()];
+      secureRandom.nextBytes(ivspec);
+
+      cipher.init(Cipher.ENCRYPT_MODE, desKey[i], secureRandom);
+      IV[i] = cipher.getIV();
+      cipherText = cipher.doFinal(cipherText);       
+    }
+    createFileIVText(cipherText, IV, nameFileIV);
+  }
+
+  public static void modeEEE(String nameFile, String mode, String nameFileKey, String nameFileIV) throws Exception {
+    // Get bytes of message
+    int i;
+    byte[][] IV = new byte[3][];
+    byte[] keysBytes, cipherText;
+    SecretKey[] desKey;
+    String keyString;
+
+    byte[] message = createByte(nameFile);
+
+    // Use a key generator
+    KeyGenerator keygenerator = KeyGenerator.getInstance("DES");
+    keygenerator.init(56); // Size of key
+    desKey = new SecretKey[3];
+    // Generate a key
+    for(i = 0; i < 3; i++) 
+      desKey[i] = keygenerator.generateKey();
+    
+    keyString = "";
+    for(i = 0; i < 3; i++) 
+      keyString = keyString + Base64.getEncoder().encodeToString(desKey[i].getEncoded());       
+    
+    keysBytes = keyString.getBytes();
+
+    createFile(keysBytes, nameFileKey);
+  
+    cipherText = message;
+
+    String c = "DES/"+ mode +"/PKCS5Padding";
+    for(i = 0; i < 3; i++) {
+      if(i > 0) 
+        c = "DES/"+ mode +"/NoPadding";
       Cipher cipher = Cipher.getInstance(c);
       // generate an initialization vector (IV)
       SecureRandom secureRandom = new SecureRandom();
@@ -64,25 +111,22 @@ public class TripleDESTest {
       IV[i] = cipher.getIV();
       cipherText = cipher.doFinal(cipherText);
     }
-
-    //createFile(cipherText, "ServidorCip.java");
-    createFileIVText(cipherText, IV, "ServidorCip.java");
-    byte[] decrypt = modeEEEdecipher(cipherText);
-    createFile(decrypt, "servidor.java");
+    createFileIVText(cipherText, IV, nameFileIV);
   }
 
-  public static byte[] modeEEEdecipher(byte[] toDecrypt) throws Exception {
+  public static byte[] modeEEEdecipher(String mode, String nameFileKey, String nameFileIV) throws Exception {
     int i, j;
     byte[][] IV;
     IV = new byte[3][];
-
-    String c = "DES/CBC/NoPadding";
-    byte[] plainText = toDecrypt;
-    String name = "key.txt";
-    SecretKey[] desKey = new SecretKey[3];
-    createByteKey(name);
-    System.out.println("Se crearon correctamente");
+    byte[] plainText, toDecrypt; 
+    SecretKey[] desKey;
     String aux = "";
+    String c = "DES/"+ mode +"/NoPadding";
+    
+    desKey = new SecretKey[3];
+    createByteKey(nameFileKey);
+
+    // Get key from file
     aux = new String(originalKey_1);
     byte[] decodedKey = Base64.getDecoder().decode(aux);
     desKey[0] = new SecretKeySpec(decodedKey, 0, decodedKey.length, "DES");    // decode the base64 encoded string
@@ -97,22 +141,24 @@ public class TripleDESTest {
     IV[1] = new byte[8];
     IV[2] = new byte[8];
 
-    toDecrypt = createByteIVText("ServidorCip.java");
-
+    // Get bytes to decrypt
+    toDecrypt = createByteIVText(nameFileIV);
+    plainText = toDecrypt;
     IV[0] = iv_1;
     IV[1] = iv_2;
     IV[2] = iv_3;
 
     for(i = 1; i <= 3; i++) {
-      if(i - 3 == 0) {
-        c = "DES/CBC/PKCS5Padding";
-      }
+      if(i - 3 == 0) 
+        c = "DES/"+ mode +"/PKCS5Padding";
+      
       Cipher decipher = Cipher.getInstance(c);
       decipher.init(Cipher.DECRYPT_MODE, desKey[3-i], new IvParameterSpec(IV[3-i]));
       plainText = decipher.doFinal(plainText);
     }
     return plainText;
   }
+
   // ---------------------------------------------------
   //             CREATE BYTE KEY     
   // ---------------------------------------------------
@@ -172,7 +218,7 @@ public class TripleDESTest {
   //             CREATE BYTE KEY     
   // ---------------------------------------------------
   // Convert a File to byte[]
-  public static void createByteKey(String nameFile)  { 
+  public static void createByteKey(String nameFile) { 
     System.out.println("Creo bytes para la llave");
     boolean ok = false;  
     int i;
@@ -204,7 +250,7 @@ public class TripleDESTest {
   //                  CREATE BYTE[]            
   // ---------------------------------------------------
   // Convert a File to byte[]
-  public static byte[] createByte(String nameFile)  { 
+  public static byte[] createByte(String nameFile) { 
     boolean ok = false;  
     String sep = System.getProperty("file.separator");
     // File have to be in ARCHIVOS dir
@@ -249,34 +295,53 @@ public class TripleDESTest {
     }         
     return ok;
   }
-
- /* public void encryptEEE() throws NoSuchAlgorithmException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException {
-
-  }*/
+  public static long timeBegin() {
+    // GET TIME
+    long TInicio = 0; 
+    // Take the begin 
+    TInicio = System.currentTimeMillis();
+    return TInicio;
+  }
+  public static void timeEnd(long TInicio) {
+    // TAKE TIME
+    // Take end
+    long TFin, tiempo;
+    TFin = System.currentTimeMillis(); 
+    tiempo = TFin - TInicio; 
+    System.out.println("Time in ms: " + tiempo);    
+  }
   // ---------------------------------------------------
   //                    MAIN          
   // ---------------------------------------------------
   public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, BadPaddingException,
       IllegalBlockSizeException, InvalidKeyException, IOException {
-
-    // GET TIME
-    long TInicio, TFin, tiempo; 
-    // Take the begin 
-    TInicio = System.currentTimeMillis();
-    
+    long timeB = timeBegin();
+    String file, mode, nameKey, nameFileIV;
+    byte [] decrypt;
     try {
-      modeEEE();
+/*      System.out.println("Enter file name");
+      file = sc.nextLine();
+      System.out.println("Enter file name");
+      mode = m.nextLine();
+  */
+      file = "ipn.PNG";
+      mode = "CTR";    
+      nameKey = "key.txt";
+      nameFileIV = "CipIPN.txt";
+
+      // String nameFile, String mode, String nameFileKey, String nameFileIV
+      modeEEE(file, mode, nameKey, nameFileIV);
+
+      // String mode, String nameFileKey, String nameFileIV
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      
+      createFile(decrypt, file);
     }
     catch(Exception e) {
       e.printStackTrace(); 
     }
+    timeEnd(timeB);
    
-    // TAKE TIME
-    // Take end
-    TFin = System.currentTimeMillis(); 
-    tiempo = TFin - TInicio; 
-    System.out.println("Time in ms: " + tiempo);
-
 
     // Para leer cadenas
   }
