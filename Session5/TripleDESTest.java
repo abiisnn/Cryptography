@@ -219,7 +219,6 @@ public class TripleDESTest {
   // ---------------------------------------------------
   // Convert a File to byte[]
   public static void createByteKey(String nameFile) { 
-    System.out.println("Creo bytes para la llave");
     boolean ok = false;  
     int i;
     File archivo = new File(nameFile);
@@ -266,7 +265,7 @@ public class TripleDESTest {
       FileInputStream docu = new FileInputStream(archivo);
       // Insert in new array
       int numBytes = docu.read(archivoBytes);
-      System.out.print("El archivo tiene " + numBytes + " de bytes.");
+      System.out.println("\nEl archivo "+ nameFile +" tiene " + numBytes + " bytes.");
       docu.close(); // Close
     } 
     catch (FileNotFoundException e) {
@@ -308,14 +307,14 @@ public class TripleDESTest {
     long TFin, tiempo;
     TFin = System.currentTimeMillis(); 
     tiempo = TFin - TInicio; 
-    System.out.println("Time in ms: " + tiempo);    
+    System.out.println("Time in MS: " + tiempo);    
   }
   // ---------------------------------------------------
   //                    MAIN          
   // ---------------------------------------------------
   public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, BadPaddingException,
       IllegalBlockSizeException, InvalidKeyException, IOException {
-    long timeB = timeBegin();
+    long timeB;
     String file, mode, nameKey, nameFileIV;
     byte [] decrypt;
     try {
@@ -324,25 +323,109 @@ public class TripleDESTest {
       System.out.println("Enter file name");
       mode = m.nextLine();
   */
-      file = "ipn.PNG";
-      mode = "CTR";    
-      nameKey = "key.txt";
-      nameFileIV = "CipIPN.txt";
+      mode = "CFB";
 
+      timeB = timeBegin();
+      file = "sistemas_operativos.pdf";    
+      nameKey = "keySO.txt";
+      nameFileIV = "CipSO.txt";
+      System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
       modeEEE(file, mode, nameKey, nameFileIV);
-
       // String mode, String nameFileKey, String nameFileIV
       decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      
       createFile(decrypt, file);
+      timeEnd(timeB);
+
+
+      timeB = timeBegin();
+      file = "Mov_Pendulo_Simple.mov";    
+      nameKey = "keyMPS.txt";
+      nameFileIV = "CipMPS.txt";
+      System.out.println("\n\n-----> Working with:" + file);
+      // String nameFile, String mode, String nameFileKey, String nameFileIV
+      modeEEE(file, mode, nameKey, nameFileIV);
+      // String mode, String nameFileKey, String nameFileIV
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      createFile(decrypt, file);
+      timeEnd(timeB);
+
+      timeB = timeBegin();
+      file = "ArquitecturaComputadoras.PDF";    
+      nameKey = "keyAC.txt";
+      nameFileIV = "CipAC.txt";
+      System.out.println("\n\n-----> Working with:" + file);
+      // String nameFile, String mode, String nameFileKey, String nameFileIV
+      modeEEE(file, mode, nameKey, nameFileIV);
+      // String mode, String nameFileKey, String nameFileIV
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      createFile(decrypt, file);
+      timeEnd(timeB);
+
+      timeB = timeBegin();
+      file = "Recursos_Apuntes_21_Vectorial.doc";    
+      nameKey = "keyRAV.txt";
+      nameFileIV = "CipRAV.txt";
+      System.out.println("\n\n-----> Working with:" + file);
+      // String nameFile, String mode, String nameFileKey, String nameFileIV
+      modeEEE(file, mode, nameKey, nameFileIV);
+      // String mode, String nameFileKey, String nameFileIV
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      createFile(decrypt, file);
+      timeEnd(timeB);
+
+      timeB = timeBegin();
+      file = "Aparato_Respiratorio.pptm";    
+      nameKey = "keyAR.txt";
+      nameFileIV = "CipAR.txt";
+      System.out.println("\n\n-----> Working with:" + file);
+      // String nameFile, String mode, String nameFileKey, String nameFileIV
+      modeEEE(file, mode, nameKey, nameFileIV);
+      // String mode, String nameFileKey, String nameFileIV
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      createFile(decrypt, file);
+      timeEnd(timeB);
+
+      timeB = timeBegin();
+      file = "ha.exe";    
+      nameKey = "keyHA.txt";
+      nameFileIV = "CipHA.txt";
+      System.out.println("\n\n-----> Working with:" + file);
+      // String nameFile, String mode, String nameFileKey, String nameFileIV
+      modeEEE(file, mode, nameKey, nameFileIV);
+      // String mode, String nameFileKey, String nameFileIV
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      createFile(decrypt, file);
+      timeEnd(timeB);
+
+      timeB = timeBegin();
+      file = "guia-tkinter.pdf";    
+      nameKey = "keyGT.txt";
+      nameFileIV = "CipGT.txt";
+      System.out.println("\n\n-----> Working with:" + file);
+      // String nameFile, String mode, String nameFileKey, String nameFileIV
+      modeEEE(file, mode, nameKey, nameFileIV);
+      // String mode, String nameFileKey, String nameFileIV
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      createFile(decrypt, file);
+      timeEnd(timeB);
+
+      timeB = timeBegin();
+      file = "ipn.PNG";    
+      nameKey = "keyIPN.txt";
+      nameFileIV = "CipIPN.txt";
+      System.out.println("\n\n-----> Working with:" + file);
+      // String nameFile, String mode, String nameFileKey, String nameFileIV
+      modeEEE(file, mode, nameKey, nameFileIV);
+      // String mode, String nameFileKey, String nameFileIV
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      createFile(decrypt, file);
+      timeEnd(timeB);
+  
     }
     catch(Exception e) {
       e.printStackTrace(); 
-    }
-    timeEnd(timeB);
-   
-
+    }   
     // Para leer cadenas
   }
 }
