@@ -1,51 +1,87 @@
-//#include <QtCore/QCoreApplication>
+#include <iostream>
+#include <cryptopp/des.h>
+#include <cryptopp/osrng.h>
+#include <cryptopp/filters.h>
+#include <cryptopp/rng.h>
+#include <cryptopp/randpool.h>
+#include <cryptopp/rdrand.h>
+#include <cryptopp/drbg.h>
 
-#include <cryptopp810/des.h>
 
-#include <stdio.h>
+using namespace std;
 
-// keyString 是一个密钥，必须保证长度要超过 16
-// block 是要处理的数据，处理后的数据也同时存放在 block 里，必须保证它的长度为 8 的整倍数
-// length 是 block 的长度，必须保证它为 8 的整倍数
-// direction 是表示是否是加密还是解密，若是加密，则用 CryptoPP::ENCRYPTION, 解密用 CryptoPP::DECRYPTION
-void DES_Process(const char *keyString, byte *block, size_t length, CryptoPP::CipherDir direction){
-    using namespace CryptoPP;
+int main(int argc, char const *argv[])
+{
+    AutoSeededRandomPool prng;
 
-    byte key[DES_EDE2::KEYLENGTH];
-    memcpy(key, keyString, DES_EDE2::KEYLENGTH);
-    BlockTransformation *t = NULL;
+    SecByteBlock key(0x00, DES_EDE2::DEFAULT_KEYLENGTH);
+    prng.GenerateBlock(key, key.size());
 
-    if(direction == ENCRYPTION)
-        t = new DES_EDE2_Encryption(key, DES_EDE2::KEYLENGTH);
-    else
-        t = new DES_EDE2_Decryption(key, DES_EDE2::KEYLENGTH);
+    byte iv[DES_EDE2::BLOCKSIZE];
+    prng.GenerateBlock(iv, sizeof(iv));
 
-    int steps = length / t->BlockSize();
-    for(int i=0; i<steps; i++){
-        int offset = i * t->BlockSize();
-        t->ProcessBlock(block + offset);
+    string plain = "CBC Mode Test";
+    string cipher, encoded, recovered;
+
+    /*********************************\
+    \*********************************/
+
+    try
+    {
+        cout << "plain text: " << plain << endl;
+
+        CBC_Mode< DES_EDE2 >::Encryption e;
+        e.SetKeyWithIV(key, key.size(), iv);
+
+        // The StreamTransformationFilter adds padding
+        //  as required. ECB and CBC Mode must be padded
+        //  to the block size of the cipher.
+        StringSource ss1(plain, true, 
+            new StreamTransformationFilter(e,
+                new StringSink(cipher)
+            ) // StreamTransformationFilter      
+        ); // StringSource
+    }
+    catch(const CryptoPP::Exception& e)
+    {
+        cerr << e.what() << endl;
+        exit(1);
     }
 
-    delete t;
-}
+    /*********************************\
+    \*********************************/
 
-int main(int argc, char *argv[])
-{
-    QCoreApplication a(argc, argv);
+    // Pretty print
+    StringSource ss2(cipher, true,
+        new HexEncoder(
+            new StringSink(encoded)
+        ) // HexEncoder
+    ); // StringSource
 
-    byte block[1024] = "++++++++--------********////////";
+    cout << "cipher text: " << encoded << endl;
 
-    const char *key = "http://qsanguosha.org/forum";
+    /*********************************\
+    \*********************************/
 
-    printf("original text: %s\n", block);
+    try
+    {
+        CBC_Mode< DES_EDE2 >::Decryption d;
+        d.SetKeyWithIV(key, key.size(), iv);
 
-    DES_Process(key, block, 16, CryptoPP::ENCRYPTION);
+        // The StreamTransformationFilter removes
+        //  padding as required.
+        StringSource ss3(cipher, true, 
+            new StreamTransformationFilter(d,
+                new StringSink(recovered)
+            ) // StreamTransformationFilter
+        ); // StringSource
 
-    printf("Encrypt: %s\n", block);
-
-    DES_Process(key, block, 16, CryptoPP::DECRYPTION);
-
-    printf("Decrypt: %s\n", block);
-
-    return a.exec();
+        cout << "recovered text: " << recovered << endl;
+    }
+    catch(const CryptoPP::Exception& e)
+    {
+        cerr << e.what() << endl;
+        exit(1);
+    }
+    return 0;
 }
