@@ -315,15 +315,25 @@ public class TripleDESTest {
   public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, BadPaddingException,
       IllegalBlockSizeException, InvalidKeyException, IOException {
     long timeB;
-    String file, mode, nameKey, nameFileIV;
+    String opc, file, mode, nameKey, nameFileIV;
     byte [] decrypt;
     try {
-/*      System.out.println("Enter file name");
-      file = sc.nextLine();
+      //System.out.println("Choose 1 cipher, 2 Decipher");
+      //opc = sc.nextLine();
       System.out.println("Enter file name");
+      file = sc.nextLine();
+      System.out.println("Enter mode");
       mode = m.nextLine();
-  */
-      mode = "CFB";
+      System.out.println("Enter name key");
+      nameKey = m.nextLine();
+      System.out.println("Enter name cipher name");
+      nameFileIV = m.nextLine();
+
+      modeEEE(file, mode, nameKey, nameFileIV);
+      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      createFile(decrypt, file);
+
+/*      mode = "CFB";
 
       timeB = timeBegin();
       file = "sistemas_operativos.pdf";    
@@ -347,6 +357,7 @@ public class TripleDESTest {
       // String nameFile, String mode, String nameFileKey, String nameFileIV
       modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
+<<<<<<< HEAD
 
       // String mode, String nameFileKey, String nameFileIV
       //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
@@ -430,6 +441,9 @@ public class TripleDESTest {
       // String mode, String nameFileKey, String nameFileIV
       //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
       //createFile(decrypt, file);
+=======
+*/
+>>>>>>> 7f5faa04955b9515bfe14d05bb3be7d59f49b909
   
     }
     catch(Exception e) {
