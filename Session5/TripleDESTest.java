@@ -265,7 +265,7 @@ public class TripleDESTest {
       FileInputStream docu = new FileInputStream(archivo);
       // Insert in new array
       int numBytes = docu.read(archivoBytes);
-      System.out.println("\nEl archivo "+ nameFile +" tiene " + numBytes + " bytes.");
+      System.out.println("\nFile: "+ nameFile +" Size: " + numBytes + " bytes.");
       docu.close(); // Close
     } 
     catch (FileNotFoundException e) {
@@ -331,11 +331,12 @@ public class TripleDESTest {
       nameFileIV = "CipSO.txt";
       System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
-      modeEEE(file, mode, nameKey, nameFileIV);
-      // String mode, String nameFileKey, String nameFileIV
-      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      createFile(decrypt, file);
+      modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
+
+      // String mode, String nameFileKey, String nameFileIV
+      //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      //createFile(decrypt, file);
 
 
       timeB = timeBegin();
@@ -344,11 +345,12 @@ public class TripleDESTest {
       nameFileIV = "CipMPS.txt";
       System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
-      modeEEE(file, mode, nameKey, nameFileIV);
-      // String mode, String nameFileKey, String nameFileIV
-      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      createFile(decrypt, file);
+      modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
+
+      // String mode, String nameFileKey, String nameFileIV
+      //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      //createFile(decrypt, file);
 
       timeB = timeBegin();
       file = "ArquitecturaComputadoras.PDF";    
@@ -356,23 +358,26 @@ public class TripleDESTest {
       nameFileIV = "CipAC.txt";
       System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
-      modeEEE(file, mode, nameKey, nameFileIV);
-      // String mode, String nameFileKey, String nameFileIV
-      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      createFile(decrypt, file);
+      modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
 
+      // String mode, String nameFileKey, String nameFileIV
+      //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      //createFile(decrypt, file);
+    
       timeB = timeBegin();
       file = "Recursos_Apuntes_21_Vectorial.doc";    
       nameKey = "keyRAV.txt";
       nameFileIV = "CipRAV.txt";
       System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
-      modeEEE(file, mode, nameKey, nameFileIV);
-      // String mode, String nameFileKey, String nameFileIV
-      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      createFile(decrypt, file);
+      modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
+
+      // String mode, String nameFileKey, String nameFileIV
+      //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      //createFile(decrypt, file);
+    
 
       timeB = timeBegin();
       file = "Aparato_Respiratorio.pptm";    
@@ -380,23 +385,25 @@ public class TripleDESTest {
       nameFileIV = "CipAR.txt";
       System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
-      modeEEE(file, mode, nameKey, nameFileIV);
-      // String mode, String nameFileKey, String nameFileIV
-      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      createFile(decrypt, file);
+      modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
 
+      // String mode, String nameFileKey, String nameFileIV
+      //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      //createFile(decrypt, file);
+      
       timeB = timeBegin();
       file = "ha.exe";    
       nameKey = "keyHA.txt";
       nameFileIV = "CipHA.txt";
       System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
-      modeEEE(file, mode, nameKey, nameFileIV);
-      // String mode, String nameFileKey, String nameFileIV
-      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      createFile(decrypt, file);
+      modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
+
+      // String mode, String nameFileKey, String nameFileIV
+      //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      //createFile(decrypt, file);
 
       timeB = timeBegin();
       file = "guia-tkinter.pdf";    
@@ -404,11 +411,12 @@ public class TripleDESTest {
       nameFileIV = "CipGT.txt";
       System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
-      modeEEE(file, mode, nameKey, nameFileIV);
-      // String mode, String nameFileKey, String nameFileIV
-      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      createFile(decrypt, file);
+      modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
+
+      // String mode, String nameFileKey, String nameFileIV
+      //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      //createFile(decrypt, file);
 
       timeB = timeBegin();
       file = "ipn.PNG";    
@@ -416,11 +424,12 @@ public class TripleDESTest {
       nameFileIV = "CipIPN.txt";
       System.out.println("\n\n-----> Working with:" + file);
       // String nameFile, String mode, String nameFileKey, String nameFileIV
-      modeEEE(file, mode, nameKey, nameFileIV);
-      // String mode, String nameFileKey, String nameFileIV
-      decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
-      createFile(decrypt, file);
+      modeEEE2Keys(file, mode, nameKey, nameFileIV);
       timeEnd(timeB);
+
+      // String mode, String nameFileKey, String nameFileIV
+      //decrypt = modeEEEdecipher(mode, nameKey, nameFileIV);
+      //createFile(decrypt, file);
   
     }
     catch(Exception e) {
