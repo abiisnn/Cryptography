@@ -50,11 +50,10 @@ void printBits(int n) {
 int elementSB(int m) {
 	vector<int> matrix = {143, 199, 227, 241, 248, 124, 62, 31};	
 	vector<int> mul(8);	
-	int i, j, k, n;
-	int fijo = 198;
-	int mult = 0, suma = 0;
-	int r, aux, auxN, x;
+	int i, j, k, n, r, aux, auxN, x;
+	int fijo = 198, mult = 0, suma = 0;
 
+	// Convert m to be used
 	n = 0; j = 7;
 	for(i = 0; i < 8; i++) {
 		aux = (m >> i) & 1;
@@ -62,8 +61,6 @@ int elementSB(int m) {
 			n = n | (1 << j);
 		j--;
 	}
-	//cout << "Working with:" << endl;
-	//printBits(n);
 
 	k = 7;
 	for(i = 0; i < matrix.size(); i++) {
@@ -78,11 +75,6 @@ int elementSB(int m) {
 			mult = mult | (x << k);
 		k--;
 	}
-	//cout << endl << endl << "FINAL MULT:" << endl;
-	//printBits(mult);
-	
-	//cout << endl << endl << "FIJO:" << endl;
-	//printBits(fijo);
 	
 	x = 0; j = 0;
 	for(i = 7; i < mul.size(); i--) {
@@ -95,21 +87,15 @@ int elementSB(int m) {
 		x = 0;
 		j++;
 	}
-	//cout << "FINAL SUM" << endl;
-	//printBits(suma);
-
-	//cout << "result in dec " << suma << endl;	
 	return suma;
 }
 
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
 	int i, j, numero;
 	for(i = 0; i < inverseTable.size(); i++) {
 		for(j = 0; j < inverseTable.size(); j++) {
 			numero = elementSB(inverseTable[i][j]);
-			//cout << numero << " ";
 			decToHex(numero);
 			cout << " ";
 		}
